@@ -15,18 +15,20 @@ renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
-camera.position.setZ(30)
+const torusKnotGeometry = new THREE.TorusKnotGeometry(7, 2, 100, 16)
+const torusKnotMaterial = new THREE.MeshBasicMaterial({
+	color: 0xffff00,
+	wireframe: true,
+})
+const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
+scene.add(torusKnot)
 
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100)
-const material = new THREE.MeshStandardMaterial({ color: 0xff6347 })
-const torus = new THREE.Mesh(geometry, material)
-scene.add(torus)
+torusKnot.position.z = -20
+torusKnot.position.x = -2
+torusKnot.position.y = 2
 
 const ambientLight = new THREE.AmbientLight(0xffffff)
 scene.add(ambientLight)
-
-const grigHelper = new THREE.GridHelper(200, 50)
-scene.add(grigHelper)
 
 function addstar() {
 	const geometry = new THREE.SphereGeometry(0.25, 24, 24)
@@ -60,17 +62,30 @@ const earth = new THREE.Mesh(
 
 scene.add(earth)
 
-earth.position.z = 30
-earth.position.setX(-10)
+earth.position.x = -40
+earth.position.x = -15
+
+function moveCamera() {
+	const t = document.body.getBoundingClientRect().top
+	earth.rotation.x += 0.05
+	earth.rotation.y += 0.075
+	earth.rotation.z += 0.05
+
+	camera.position.z = t * -0.01
+	camera.position.x = t * -0.0002
+	camera.position.y = t * -0.0002
+}
+
+document.body.onscroll = moveCamera
 
 function animate() {
 	requestAnimationFrame(animate)
 
-	torus.rotation.x += 0.01
-	torus.rotation.y += 0.005
-	torus.rotation.z += 0.01
+	torusKnot.rotation.x += 0.01
+	torusKnot.rotation.y += 0.005
+	torusKnot.rotation.z += 0.01
 
-	earth.rotation.y += 0.01
+	// earth.rotation.y += 0.01
 
 	renderer.render(scene, camera)
 }
