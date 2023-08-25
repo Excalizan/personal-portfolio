@@ -43,9 +43,12 @@ function addstar() {
 
 Array(300).fill().forEach(addstar)
 
-
-const earthTexture = new THREE.TextureLoader().load('assets/2k_earth_nightmap.jpg')
-const earthNormal = new THREE.TextureLoader().load('assets/2k_earth_normal_map.tif')
+const earthTexture = new THREE.TextureLoader().load(
+	'assets/2k_earth_nightmap.jpg'
+)
+const earthNormal = new THREE.TextureLoader().load(
+	'assets/2k_earth_normal_map.tif'
+)
 
 const earth = new THREE.Mesh(
 	new THREE.SphereGeometry(3, 32, 32),
