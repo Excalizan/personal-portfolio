@@ -1,6 +1,5 @@
 import './style.css'
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(
@@ -22,8 +21,6 @@ const geometry = new THREE.TorusGeometry(10, 3, 16, 100)
 const material = new THREE.MeshStandardMaterial({ color: 0xff6347 })
 const torus = new THREE.Mesh(geometry, material)
 scene.add(torus)
-
-const controls = new OrbitControls(camera, renderer.domElement)
 
 const ambientLight = new THREE.AmbientLight(0xffffff)
 scene.add(ambientLight)
@@ -71,8 +68,6 @@ function animate() {
 	torus.rotation.z += 0.01
 
 	earth.rotation.y += 0.01
-
-	controls.update()
 
 	renderer.render(scene, camera)
 }
