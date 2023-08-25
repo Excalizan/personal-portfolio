@@ -74,7 +74,11 @@ function moveCamera() {
 	camera.position.z = t * -0.01
 	camera.position.x = t * -0.0002
 	camera.position.y = t * -0.0002
+
+	camera.rotation.x = t * -0.0002
+
 }
+
 
 document.body.onscroll = moveCamera
 
