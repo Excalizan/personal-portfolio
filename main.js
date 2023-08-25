@@ -25,15 +25,11 @@ scene.add(torus)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
-const pointLight = new THREE.PointLight(0xffffff)
-pointLight.position.set(10, 10, 10)
-
 const ambientLight = new THREE.AmbientLight(0xffffff)
-scene.add(pointLight, ambientLight)
+scene.add(ambientLight)
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
 const grigHelper = new THREE.GridHelper(200, 50)
-scene.add(lightHelper, grigHelper)
+scene.add(grigHelper)
 
 function addstar() {
 	const geometry = new THREE.SphereGeometry(0.25, 24, 24)
@@ -42,15 +38,32 @@ function addstar() {
 
 	const [x, y, z] = Array(3)
 		.fill()
-		.map(() => THREE.MathUtils.randFloatSpread(100))
+		.map(() => THREE.MathUtils.randFloatSpread(200))
 
 	star.position.set(x, y, z)
 	scene.add(star)
 }
 
-Array(200).fill().forEach(addstar)
+Array(300).fill().forEach(addstar)
 
-// const spaceTexture = new THREE.TextureLoader().load('space.jpg')
+const spaceTexture = new THREE.TextureLoader().load('2k_stars_milky_way.jpg')
+scene.background = spaceTexture
+
+const earthTexture = new THREE.TextureLoader().load('2k_earth_nightmap.jpg')
+const earthNormal = new THREE.TextureLoader().load('2k_earth_normal_map.tif')
+
+const earth = new THREE.Mesh(
+	new THREE.SphereGeometry(3, 32, 32),
+	new THREE.MeshStandardMaterial({
+		map: earthTexture,
+		normalMap: earthNormal,
+	})
+)
+
+scene.add(earth)
+
+earth.position.z = 30
+earth.position.setX(-10)
 
 function animate() {
 	requestAnimationFrame(animate)
@@ -58,6 +71,8 @@ function animate() {
 	torus.rotation.x += 0.01
 	torus.rotation.y += 0.005
 	torus.rotation.z += 0.01
+
+	earth.rotation.y += 0.01
 
 	controls.update()
 
