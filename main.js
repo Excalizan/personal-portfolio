@@ -16,8 +16,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
 const torusKnotGeometry = new THREE.TorusKnotGeometry(7, 2, 100, 16)
-const torusKnotMaterial = new THREE.MeshBasicMaterial({
-	color: 0xffff00,
+const torusKnotMaterial = new THREE.MeshNormalMaterial({
 	wireframe: true,
 })
 const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
@@ -27,24 +26,24 @@ torusKnot.position.z = -20
 torusKnot.position.x = -2
 torusKnot.position.y = 2
 
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
 scene.add(ambientLight)
 
-function addstar() {
-	const geometry = new THREE.SphereGeometry(0.25, 24, 24)
+function addStar() {
+	const geometry = new THREE.SphereGeometry(0.5, 24, 24)
 	const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
 	const star = new THREE.Mesh(geometry, material)
 
-	// fill a space of 200x500x200 with stars
-	const x = THREE.MathUtils.randFloatSpread(200)
+	const x = THREE.MathUtils.randFloatSpread(1800)
 	const y = THREE.MathUtils.randFloatSpread(1000)
-	const z = THREE.MathUtils.randFloatSpread(200)
+	const z = THREE.MathUtils.randFloatSpread(1000)
 
 	star.position.set(x, y, z)
 	scene.add(star)
 }
 
-Array(2000).fill().forEach(addstar)
+Array(2000).fill().forEach(addStar)
 
 const earthTexture = new THREE.TextureLoader().load('img/2k_earth_nightmap.jpg')
 const earthNormal = new THREE.TextureLoader().load(
@@ -70,7 +69,7 @@ function moveCamera() {
 	earth.rotation.y += 0.075
 	earth.rotation.z += 0.05
 
-	camera.position.y = t * 0.1
+	camera.position.z = t * -0.1
 
 }
 
