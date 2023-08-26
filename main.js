@@ -73,7 +73,7 @@ const earth = new THREE.Mesh(
 	})
 )
 
-// scene.add(earth)
+scene.add(earth)
 
 earth.position.x = -40
 earth.position.x = -15
