@@ -27,29 +27,28 @@ torusKnot.position.z = -20
 torusKnot.position.x = -2
 torusKnot.position.y = 2
 
-const ambientLight = new THREE.AmbientLight(0xffffff)
+const ambientLight = new THREE.AmbientLight(0xffffff, 2)
 scene.add(ambientLight)
 
 function addstar() {
 	const geometry = new THREE.SphereGeometry(0.25, 24, 24)
-	const material = new THREE.MeshStandardMaterial({ color: 0xffffff })
+	const material = new THREE.MeshBasicMaterial({ color: 0xffffff })
 	const star = new THREE.Mesh(geometry, material)
 
-	const [x, y, z] = Array(3)
-		.fill()
-		.map(() => THREE.MathUtils.randFloatSpread(200))
+	// fill a space of 200x500x200 with stars
+	const x = THREE.MathUtils.randFloatSpread(200)
+	const y = THREE.MathUtils.randFloatSpread(1000)
+	const z = THREE.MathUtils.randFloatSpread(200)
 
 	star.position.set(x, y, z)
 	scene.add(star)
 }
 
-Array(300).fill().forEach(addstar)
+Array(2000).fill().forEach(addstar)
 
-const earthTexture = new THREE.TextureLoader().load(
-	'public/img/2k_earth_nightmap.jpg'
-)
+const earthTexture = new THREE.TextureLoader().load('img/2k_earth_nightmap.jpg')
 const earthNormal = new THREE.TextureLoader().load(
-	'public/img/2k_earth_normal_map.tif'
+	'img/2k_earth_normal_map.tif'
 )
 
 const earth = new THREE.Mesh(
@@ -71,14 +70,9 @@ function moveCamera() {
 	earth.rotation.y += 0.075
 	earth.rotation.z += 0.05
 
-	camera.position.z = t * -0.01
-	camera.position.x = t * -0.0002
-	camera.position.y = t * -0.0002
-
-	camera.rotation.x = t * -0.0002
+	camera.position.y = t * 0.1
 
 }
-
 
 document.body.onscroll = moveCamera
 
