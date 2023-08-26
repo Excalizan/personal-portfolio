@@ -22,10 +22,21 @@ const torusKnotMaterial = new THREE.MeshNormalMaterial({
 const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
 scene.add(torusKnot)
 
-torusKnot.position.z = -20
-torusKnot.position.x = -2
-torusKnot.position.y = 2
+torusKnot.position.x = 0
+torusKnot.position.y = 0
+torusKnot.position.z = 0
 
+const coneGeometry = new THREE.ConeGeometry(5, 10, 32, 16, false, 0, 6.3)
+const coneMaterial = new THREE.MeshBasicMaterial({
+	color: 0xffff00,
+	wireframe: true,
+})
+const cone = new THREE.Mesh(coneGeometry, coneMaterial)
+scene.add(cone)
+
+cone.position.x = 20
+cone.position.y = -10
+cone.position.z = 50
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
 scene.add(ambientLight)
@@ -70,7 +81,6 @@ function moveCamera() {
 	earth.rotation.z += 0.05
 
 	camera.position.z = t * -0.1
-
 }
 
 document.body.onscroll = moveCamera
@@ -81,6 +91,9 @@ function animate() {
 	torusKnot.rotation.x += 0.01
 	torusKnot.rotation.y += 0.005
 	torusKnot.rotation.z += 0.01
+
+	cone.rotation.y += 0.05
+	cone.rotation.z += 0.1
 
 	// earth.rotation.y += 0.01
 
