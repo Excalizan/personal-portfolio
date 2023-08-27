@@ -15,12 +15,16 @@ renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
+
+let objects = []
+
 // torus
 const torusKnotGeometry = new THREE.TorusKnotGeometry(7, 2, 100, 16)
 const torusKnotMaterial = new THREE.MeshNormalMaterial({
 	wireframe: true,
 })
 const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
+objects.push(torusKnot)
 scene.add(torusKnot)
 
 torusKnot.position.x = 0
@@ -34,11 +38,27 @@ const coneMaterial = new THREE.MeshBasicMaterial({
 	wireframe: true,
 })
 const cone = new THREE.Mesh(coneGeometry, coneMaterial)
+objects.push(cone)
 scene.add(cone)
 
 cone.position.x = 20
 cone.position.y = -10
 cone.position.z = 50
+
+
+// cube
+const cubeGeometry = new THREE.BoxGeometry(7, 7, 7)
+const cubeMaterial = new THREE.MeshBasicMaterial({
+	color: 0x00ff00,
+	wireframe: true,
+})
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+objects.push(cube)
+scene.add(cube)
+
+cube.position.x = -20
+cube.position.y = 10
+cube.position.z = 80
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
@@ -90,16 +110,24 @@ function moveCamera() {
 
 document.body.onscroll = moveCamera
 
+
+// assing a random spin amount to each object
+objects.forEach((object) => {
+	object.spinAmount = Math.random() * 0.1
+	console.log(object.spinAmount, object.geometry)
+})
+
+
 // main loop
 function animate() {
 	requestAnimationFrame(animate)
 
-	torusKnot.rotation.x += 0.01
-	torusKnot.rotation.y += 0.005
-	torusKnot.rotation.z += 0.01
-
-	cone.rotation.y += 0.05
-	cone.rotation.z += 0.1
+	// rotate every object in the array by a random amount
+	objects.forEach((object) => {
+		object.rotation.x += object.spinAmount
+		object.rotation.y += object.spinAmount
+		object.rotation.z += object.spinAmount
+	})
 
 	// earth.rotation.y += 0.01
 
