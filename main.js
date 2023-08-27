@@ -15,7 +15,6 @@ renderer.setPixelRatio(window.devicePixelRatio)
 renderer.setSize(window.innerWidth, window.innerHeight)
 document.body.appendChild(renderer.domElement)
 
-
 let objects = []
 
 // torus
@@ -45,7 +44,6 @@ cone.position.x = 20
 cone.position.y = -10
 cone.position.z = 50
 
-
 // cube
 const cubeGeometry = new THREE.BoxGeometry(7, 7, 7)
 const cubeMaterial = new THREE.MeshBasicMaterial({
@@ -59,6 +57,33 @@ scene.add(cube)
 cube.position.x = -20
 cube.position.y = 10
 cube.position.z = 80
+
+// sphere
+const sphereGeometry = new THREE.SphereGeometry(5, 32, 32)
+const sphereMaterial = new THREE.MeshStandardMaterial({
+	wireframe: true,
+})
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
+objects.push(sphere)
+scene.add(sphere)
+
+sphere.position.x = 25
+sphere.position.y = 0
+sphere.position.z = 120
+
+// cylinder
+const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 20, 32)
+const cylinderMaterial = new THREE.MeshBasicMaterial({
+	color: 0x0000ff,
+	wireframe: true,
+})
+const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial)
+objects.push(cylinder)
+scene.add(cylinder)
+
+cylinder.position.x = -25
+cylinder.position.y = -20
+cylinder.position.z = 180
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
@@ -110,13 +135,11 @@ function moveCamera() {
 
 document.body.onscroll = moveCamera
 
-
 // assing a random spin amount to each object
 objects.forEach((object) => {
 	object.spinAmount = Math.random() * 0.1
 	console.log(object.spinAmount, object.geometry)
 })
-
 
 // main loop
 function animate() {
