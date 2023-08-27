@@ -56,7 +56,7 @@ scene.add(cube)
 
 cube.position.x = -20
 cube.position.y = 10
-cube.position.z = 80
+cube.position.z = 100
 
 // sphere
 const sphereGeometry = new THREE.SphereGeometry(5, 32, 32)
@@ -69,7 +69,7 @@ scene.add(sphere)
 
 sphere.position.x = 25
 sphere.position.y = 0
-sphere.position.z = 120
+sphere.position.z = 150
 
 // cylinder
 const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 20, 32)
@@ -83,7 +83,24 @@ scene.add(cylinder)
 
 cylinder.position.x = -25
 cylinder.position.y = -20
-cylinder.position.z = 180
+cylinder.position.z = 200
+
+// icosahedron
+const icosahedronGeometry = new THREE.IcosahedronGeometry(5, 0)
+const icosahedronMaterial = new THREE.MeshBasicMaterial({
+	color: 0xff00ff,
+	wireframe: true,
+})
+const icosahedron = new THREE.Mesh(
+	icosahedronGeometry,
+	icosahedronMaterial
+)
+objects.push(icosahedron)
+scene.add(icosahedron)
+
+icosahedron.position.x = 25
+icosahedron.position.y = 20
+icosahedron.position.z = 250
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
