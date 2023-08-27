@@ -59,7 +59,7 @@ cube.position.y = 10
 cube.position.z = 100
 
 // sphere
-const sphereGeometry = new THREE.SphereGeometry(5, 32, 32)
+const sphereGeometry = new THREE.SphereGeometry(7, 25, 25)
 const sphereMaterial = new THREE.MeshStandardMaterial({
 	wireframe: true,
 })
