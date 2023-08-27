@@ -91,16 +91,27 @@ const icosahedronMaterial = new THREE.MeshBasicMaterial({
 	color: 0xff00ff,
 	wireframe: true,
 })
-const icosahedron = new THREE.Mesh(
-	icosahedronGeometry,
-	icosahedronMaterial
-)
+const icosahedron = new THREE.Mesh(icosahedronGeometry, icosahedronMaterial)
 objects.push(icosahedron)
 scene.add(icosahedron)
 
 icosahedron.position.x = 25
 icosahedron.position.y = 20
 icosahedron.position.z = 250
+
+// torus
+const torusGeometry = new THREE.TorusGeometry(5, 2, 16, 64)
+const torusMaterial = new THREE.MeshBasicMaterial({
+	color: 0xff0000,
+	wireframe: true,
+})
+const torus = new THREE.Mesh(torusGeometry, torusMaterial)
+objects.push(torus)
+scene.add(torus)
+
+torus.position.x = -25
+torus.position.y = 0
+torus.position.z = 300
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
