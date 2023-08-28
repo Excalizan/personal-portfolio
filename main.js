@@ -119,31 +119,32 @@ document.body.onscroll = moveCamera
 // assing a random spin amount to each object
 objects.forEach((object) => {
 	object.spinAmount = Math.random() * 0.1
-	console.log(object.spinAmount, object.geometry)
 })
 
 const speedXRadiusMap = {
 	0.01: 100,
-	0.02: 150,
-	0.03: 200,
-	0.04: 250,
-	0.05: 300,
-	0.06: 350,
+	0.015: 150,
+	0.02: 200,
+	0.025: 250,
+	0.03: 300,
+	0.035: 350,
 }
-const possibleSpeeds = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
-const possibleRadius = [100, 150, 200, 250, 300, 350]
+let possibleSpeeds = [0.01, 0.015, 0.02, 0.025, 0.03, 0.035]
 
 // assing the orbit values
 objects.forEach((object) => {
 	if (!object.isCenter) {
+		// get a random grade and remove it from the array
+		let grade = Math.floor(Math.random() * possibleSpeeds.length)
 		object.orbit = {
 			orbit_c: new THREE.Vector3(0, 0, 0), //orbit center
-			orbit_a: 0, //orbit angle
-			orbit_s: possibleSpeeds[Math.floor(Math.random() * 6)],
-			orbit_r: possibleRadius[Math.floor(Math.random() * 6)],
-
+			orbit_a: Math.random() * 360, //orbit angle
+			orbit_s: possibleSpeeds[grade], //orbit speed
+			orbit_r: speedXRadiusMap[possibleSpeeds[grade]], //orbit radius
 		}
+		possibleSpeeds.splice(grade, 1)
 	}
+	console.log(object.geometry.type, object.orbit)
 })
 
 // orbit function
@@ -156,7 +157,6 @@ function orbit(object) {
 		object.orbit.orbit_c.z +
 		Math.sin(object.orbit.orbit_a) * object.orbit.orbit_r
 }
-
 // main loop
 function animate() {
 	requestAnimationFrame(animate)
