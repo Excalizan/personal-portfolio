@@ -136,9 +136,6 @@ Array(2000).fill().forEach(addStar)
 // camera movement on scroll
 function moveCamera() {
 	const t = document.body.getBoundingClientRect().top
-	earth.rotation.x += 0.05
-	earth.rotation.y += 0.075
-	earth.rotation.z += 0.05
 
 	camera.position.z = t * -0.1
 }
