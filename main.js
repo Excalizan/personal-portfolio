@@ -133,24 +133,6 @@ function addStar() {
 
 Array(2000).fill().forEach(addStar)
 
-// earth
-const earthTexture = new THREE.TextureLoader().load('img/2k_earth_nightmap.jpg')
-const earthNormal = new THREE.TextureLoader().load(
-	'img/2k_earth_normal_map.tif'
-)
-const earth = new THREE.Mesh(
-	new THREE.SphereGeometry(3, 32, 32),
-	new THREE.MeshStandardMaterial({
-		map: earthTexture,
-		normalMap: earthNormal,
-	})
-)
-
-scene.add(earth)
-
-earth.position.x = -40
-earth.position.x = -15
-
 // camera movement on scroll
 function moveCamera() {
 	const t = document.body.getBoundingClientRect().top
