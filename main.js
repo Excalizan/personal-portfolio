@@ -26,9 +26,7 @@ const torusKnot = new THREE.Mesh(torusKnotGeometry, torusKnotMaterial)
 objects.push(torusKnot)
 scene.add(torusKnot)
 
-torusKnot.position.x = 0
-torusKnot.position.y = 0
-torusKnot.position.z = 0
+torusKnot.isCenter = true
 
 // cone
 const coneGeometry = new THREE.ConeGeometry(5, 10, 32, 16, false, 0, 6.3)
@@ -40,10 +38,6 @@ const cone = new THREE.Mesh(coneGeometry, coneMaterial)
 objects.push(cone)
 scene.add(cone)
 
-cone.position.x = 20
-cone.position.y = -10
-cone.position.z = 50
-
 // cube
 const cubeGeometry = new THREE.BoxGeometry(7, 7, 7)
 const cubeMaterial = new THREE.MeshBasicMaterial({
@@ -54,10 +48,6 @@ const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
 objects.push(cube)
 scene.add(cube)
 
-cube.position.x = -20
-cube.position.y = 10
-cube.position.z = 100
-
 // sphere
 const sphereGeometry = new THREE.SphereGeometry(7, 25, 25)
 const sphereMaterial = new THREE.MeshStandardMaterial({
@@ -66,10 +56,6 @@ const sphereMaterial = new THREE.MeshStandardMaterial({
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial)
 objects.push(sphere)
 scene.add(sphere)
-
-sphere.position.x = 25
-sphere.position.y = 0
-sphere.position.z = 150
 
 // cylinder
 const cylinderGeometry = new THREE.CylinderGeometry(5, 5, 20, 32)
@@ -81,10 +67,6 @@ const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial)
 objects.push(cylinder)
 scene.add(cylinder)
 
-cylinder.position.x = -25
-cylinder.position.y = -20
-cylinder.position.z = 200
-
 // icosahedron
 const icosahedronGeometry = new THREE.IcosahedronGeometry(5, 0)
 const icosahedronMaterial = new THREE.MeshBasicMaterial({
@@ -95,10 +77,6 @@ const icosahedron = new THREE.Mesh(icosahedronGeometry, icosahedronMaterial)
 objects.push(icosahedron)
 scene.add(icosahedron)
 
-icosahedron.position.x = 25
-icosahedron.position.y = 20
-icosahedron.position.z = 250
-
 // torus
 const torusGeometry = new THREE.TorusGeometry(5, 2, 16, 64)
 const torusMaterial = new THREE.MeshBasicMaterial({
@@ -108,10 +86,6 @@ const torusMaterial = new THREE.MeshBasicMaterial({
 const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 objects.push(torus)
 scene.add(torus)
-
-torus.position.x = -25
-torus.position.y = 0
-torus.position.z = 300
 
 // light
 const ambientLight = new THREE.AmbientLight(0xffffff, 2)
@@ -148,6 +122,41 @@ objects.forEach((object) => {
 	console.log(object.spinAmount, object.geometry)
 })
 
+const speedXRadiusMap = {
+	0.01: 100,
+	0.02: 150,
+	0.03: 200,
+	0.04: 250,
+	0.05: 300,
+	0.06: 350,
+}
+const possibleSpeeds = [0.01, 0.02, 0.03, 0.04, 0.05, 0.06]
+const possibleRadius = [100, 150, 200, 250, 300, 350]
+
+// assing the orbit values
+objects.forEach((object) => {
+	if (!object.isCenter) {
+		object.orbit = {
+			orbit_c: new THREE.Vector3(0, 0, 0), //orbit center
+			orbit_a: 0, //orbit angle
+			orbit_s: possibleSpeeds[Math.floor(Math.random() * 6)],
+			orbit_r: possibleRadius[Math.floor(Math.random() * 6)],
+
+		}
+	}
+})
+
+// orbit function
+function orbit(object) {
+	object.orbit.orbit_a += object.orbit.orbit_s
+	object.position.x =
+		object.orbit.orbit_c.x +
+		Math.cos(object.orbit.orbit_a) * object.orbit.orbit_r
+	object.position.z =
+		object.orbit.orbit_c.z +
+		Math.sin(object.orbit.orbit_a) * object.orbit.orbit_r
+}
+
 // main loop
 function animate() {
 	requestAnimationFrame(animate)
@@ -159,7 +168,12 @@ function animate() {
 		object.rotation.z += object.spinAmount
 	})
 
-	// earth.rotation.y += 0.01
+	// orbit every object in the array
+	objects.forEach((object) => {
+		if (!object.isCenter) {
+			orbit(object)
+		}
+	})
 
 	renderer.render(scene, camera)
 }
