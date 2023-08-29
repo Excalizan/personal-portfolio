@@ -157,6 +157,16 @@ function orbit(object) {
 		object.orbit.orbit_c.z +
 		Math.sin(object.orbit.orbit_a) * object.orbit.orbit_r
 }
+
+// responsive
+window.addEventListener('resize', () => {
+	camera.aspect = window.innerWidth / window.innerHeight
+	camera.updateProjectionMatrix()
+
+	renderer.setSize(window.innerWidth, window.innerHeight)
+	renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+})
+
 // main loop
 function animate() {
 	requestAnimationFrame(animate)
